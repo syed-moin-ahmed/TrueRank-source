@@ -1,0 +1,68 @@
+import { LuCalculator, LuFileText, LuGrid3X3, LuListOrdered, LuMessageSquare, LuShieldCheck, LuUsers } from "react-icons/lu";
+
+// The 7 stages exactly as in the TrueRank system architecture (paper Fig. 1 / presentation).
+export const PIPELINE_STEPS = [
+  {
+    key: "query",
+    title: "User query",
+    icon: LuMessageSquare,
+    tone: "sky",
+    short: "Service request in natural language",
+    detail: "A service requester describes the need in their own words, for example “I need an electrician to repair damaged wiring and a circuit breaker.” No forms with fixed categories are required.",
+    code: "query = \"I need an electrician to repair damaged wiring…\"",
+  },
+  {
+    key: "preprocess",
+    title: "Text preprocessing",
+    icon: LuFileText,
+    tone: "green",
+    short: "Lowercase, clean, tokenize, stop words, lemmatize",
+    detail: "The query and every worker profile pass through the same cleaning function: lowercasing, punctuation/noise removal, tokenization, stop-word removal (NLTK) and WordNet lemmatization. Skills, description and work history are combined into one worker profile text.",
+    code: "clean → tokenize → remove stop words → lemmatize",
+  },
+  {
+    key: "tfidf",
+    title: "TF-IDF vectorization",
+    icon: LuGrid3X3,
+    tone: "amber",
+    short: "Terms become weighted numeric vectors",
+    detail: "TF-IDF(t, d) = TF(t, d) × IDF(t). Rare, specific terms such as “breaker” get a higher weight than common ones. Queries and profiles share one vocabulary (scikit-learn TfidfVectorizer, L2-normalised).",
+    code: "TF-IDF(t,d) = TF(t,d) × IDF(t)",
+  },
+  {
+    key: "cosine",
+    title: "Semantic matching",
+    icon: LuCalculator,
+    tone: "",
+    short: "Cosine similarity S(w,q)",
+    detail: "Cosine similarity between the query vector and each worker vector gives S(w,q). Because TF-IDF weights are never negative, S is between 0 and 1. TrueRank also shows exactly which shared terms produced the score.",
+    code: "S(w,q) = (w · q) / (‖w‖ ‖q‖)",
+  },
+  {
+    key: "trust",
+    title: "Trust score",
+    icon: LuShieldCheck,
+    tone: "pink",
+    short: "Composite Trust Score TS(w)",
+    detail: "Behavioural reliability from Average Rating, Completion Rate, Peer Endorsements and a Dispute Adjustment, using the weights selected in the paper.",
+    code: "TS = 0.40·AR + 0.20·CR + 0.20·PE + 0.20·DA",
+  },
+  {
+    key: "rank",
+    title: "Ranking engine",
+    icon: LuListOrdered,
+    tone: "sky",
+    short: "Score fusion with λ = 0.70",
+    detail: "Skill relevance and trust are fused into the final TrueRank score. Skill is weighted more (70%) than trust (30%). Workers are sorted in decreasing order.",
+    code: "R(w,q) = 0.7·S(w,q) + 0.3·TS(w)",
+  },
+  {
+    key: "recommend",
+    title: "Recommended workers",
+    icon: LuUsers,
+    tone: "green",
+    short: "Top-N ranked workers with explanations",
+    detail: "The requester sees ranked workers with their skill similarity, trust score, final score and a plain-language explanation. After the job, ratings and disputes update the trust score — the feedback loop.",
+    code: "sort by R(w,q) desc → top N",
+  },
+];

@@ -1,0 +1,101 @@
+/* ============================================================
+   Finishing layer — one font family (Plus Jakarta Sans) everywhere,
+   bright surfaces instead of dark navy.
+   ============================================================ */
+:root {
+  --font: "Plus Jakarta Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --mono: "Plus Jakarta Sans", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --grad-deep: linear-gradient(150deg, #5b3ff5 0%, #7a3cf0 40%, #a944d8 75%, #e0528f 100%);
+}
+code, .mono, .num, .formula { font-variant-numeric: tabular-nums; }
+
+/* soft paper grain over the whole site */
+body::after {
+  content: ""; position: fixed; inset: 0; z-index: 9999; pointer-events: none; opacity: .03; mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+h1, h2 { text-wrap: balance; }
+p { text-wrap: pretty; }
+
+/* cards: crisper edge + gentle glow */
+.card { border-color: rgba(108, 92, 231, .10); box-shadow: 0 1px 2px rgba(23,19,58,.04), 0 12px 32px -18px rgba(48,30,140,.22); }
+.card-hover:hover { box-shadow: 0 24px 48px -22px rgba(66,40,190,.38); }
+
+/* ---------------------------------------------------------- formulas: light, colourful */
+.formula {
+  font-family: var(--font); font-weight: 800; letter-spacing: .01em; color: var(--ink-900);
+  background: linear-gradient(135deg, #f5f1ff 0%, #fdf2f8 100%);
+  border: 1.5px solid #e4dcff; box-shadow: inset 0 1px 0 #fff;
+}
+.formula .f-sim { color: #00957f; }
+.formula .f-trust { color: #e07d00; }
+.formula .f-rank { color: #6c47ff; }
+.formula .f-dim { color: var(--ink-400); }
+
+/* hero demo query box */
+.demo-query { background: #fff; color: var(--ink-900); border: 1.5px solid #e4dcff; box-shadow: 0 8px 20px -14px rgba(108,71,255,.5); }
+.demo-query svg { color: var(--violet); }
+
+/* pipeline explorer — active step */
+.pipe-step.active { background: var(--grad-brand); color: #fff; }
+.pipe-step.active .num { color: rgba(255,255,255,.8); }
+
+/* toasts & chart tooltips */
+.toast { background: #fff; color: var(--ink-900); box-shadow: 0 0 0 1px rgba(108,92,231,.14), var(--shadow-lg); }
+.toast-msg { color: var(--ink-500); }
+.chart-tip { background: #fff; color: var(--ink-900); box-shadow: 0 0 0 1px rgba(108,92,231,.16), var(--shadow); }
+
+
+/* ---------------------------------------------------------- big surfaces: vivid purple instead of navy */
+
+
+
+/* footer: light lavender */
+.footer { background: linear-gradient(180deg, #f1ecff 0%, #fbeef6 100%); color: var(--ink-500); border-top: 1px solid #e7e0ff; }
+.footer::before { background: radial-gradient(circle, rgba(108,71,255,.16), transparent 65%); }
+.footer .logo { color: var(--ink-900); }
+.footer h4 { color: var(--ink-900); }
+.footer a { color: var(--ink-700); }
+.footer a:hover { color: var(--violet); }
+.footer-bottom { border-top-color: #e2dbfb; }
+.footer-name { color: var(--violet-700); }
+
+/* ---------------------------------------------------------- brand wordmark: TRUE + gradient RANK */
+.logo-mark { border-radius: 50% !important; }
+.logo-word { display: block; font-size: .8em; font-weight: 800; letter-spacing: .14em; line-height: 1.15; }
+.logo-rank { background: var(--grad-brand); background-size: 200% 200%; -webkit-background-clip: text; background-clip: text; color: transparent; animation: gradientShift 8s ease infinite; }
+.logo small { letter-spacing: .16em; margin-top: 3px; }
+.topnav .logo-word { font-size: .92em; }
+
+/* floating wordmark: each letter bobs gently in a travelling wave */
+.logo-word { perspective: 420px; }
+.logo-word .lw { display: inline-block; backface-visibility: visible;
+  animation: letterFloat 3.2s ease-in-out infinite, letterFlip 7s cubic-bezier(.45,.05,.3,1.2) infinite;
+  animation-delay: calc(var(--i) * 0.12s), calc(1.5s + var(--i) * 0.09s); will-change: transform, rotate, translate; }
+/* every few seconds each letter jumps up, flips over and lands back in place, one after another */
+@keyframes letterFlip {
+  0%, 82% { rotate: x 0deg; translate: 0 0; }
+  88% { translate: 0 -9px; }
+  94% { rotate: x 360deg; translate: 0 0; }
+  100% { rotate: x 360deg; translate: 0 0; }
+}
+.logo-word .logo-rank { background: var(--grad-brand); background-size: 400% 100%; background-position: calc(var(--j) * 33.33%) 0; -webkit-background-clip: text; background-clip: text; color: transparent; }
+.logo:hover .lw { animation-duration: 1.1s, 7s; }
+@keyframes letterFloat {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  25% { transform: translateY(-4px) rotate(-2.5deg); }
+  50% { transform: translateY(0) rotate(0deg); }
+  75% { transform: translateY(2px) rotate(2deg); }
+}
+.logo-mark { animation: markFloat 4s ease-in-out infinite, markFlip 7s cubic-bezier(.45,.05,.3,1.2) infinite 1.1s; }
+@keyframes markFlip { 0%, 82% { rotate: y 0deg; scale: 1; } 88% { scale: 1.12; } 94%, 100% { rotate: y 360deg; scale: 1; } }
+@keyframes markFloat { 0%, 100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-3px) rotate(-4deg); } }
+.logo:hover .logo-mark { animation: none; transform: rotate(-10deg) scale(1.1); }
+@media (prefers-reduced-motion: reduce) { .logo-word .lw, .logo-mark { animation: none; } }
+
+/* floating headings: the whole line drifts up and down together */
+.public h1, .public h2, .auth-art h2, .auth-panel h1, .welcome h2 { animation: textFloat 5s ease-in-out infinite; }
+.public h2 { animation-delay: -1.2s; }
+.public .founder-name { animation: textFloat 5s ease-in-out infinite, gradientShift 8s ease infinite; }
+@keyframes textFloat { 0%, 100% { translate: 0 0; } 50% { translate: 0 -8px; } }
+@media (prefers-reduced-motion: reduce) { .public h1, .public h2, .auth-art h2, .auth-panel h1, .welcome h2, .founder-name { animation: none; } }
