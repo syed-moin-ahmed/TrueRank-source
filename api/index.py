@@ -36,11 +36,20 @@ with app.app_context():
     if conn.execute("SELECT COUNT(*) FROM worker_profiles").fetchone()[0] == 0:
         seed_service.import_csv(conn, ROOT / "data" / "seed" / "demo_workers.csv", "demo_seed")
     email = os.getenv("ADMIN_EMAIL", "").strip().lower()
-    password = os.getenv("ADMIN_PASSWORD", "")
-    if email and len(password) >= 8 and not conn.execute("SELECT 1 FROM users WHERE role = 'admin'").fetchone():
+    password = os.getenv("ADMIN_PASSWORD", "").strip()
+    status = "skipped (ADMIN_EMAIL or ADMIN_PASSWORD not set or shorter than 8 characters)"
+    if email and len(password) >= 8:
         now = utc_now()
-        conn.execute(
-            "INSERT INTO users (name, email, password_hash, role, created_at, updated_at) VALUES (?, ?, ?, 'admin', ?, ?)",
-            ("Administrator", email, hash_password(password), now, now),
-        )
+        existing = conn.execute("SELECT id FROM users WHERE email = ?", (email,)).fetchone()
+        if existing:
+            conn.execute("UPDATE users SET role = 'admin', password_hash = ?, updated_at = ? WHERE id = ?",
+                         (hash_password(password), now, existing[0]))
+        else:
+            conn.execute(
+                "INSERT INTO users (name, email, password_hash, role, created_at, updated_at) VALUES (?, ?, ?, 'admin', ?, ?)",
+                ("Administrator", email, hash_password(password), now, now),
+            )
         conn.commit()
+        status = "ready"
+    # Diagnostic only: never logs the password itself.
+    print(f"[truerank] admin account {status}: email={email or '-'} password_length={len(password)}", flush=True)
