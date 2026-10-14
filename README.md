@@ -1,5 +1,7 @@
 # TrueRank
 
+> © 2026 Syed Moin Ahmed. All rights reserved. Private repository, see [LICENSE](LICENSE).
+
 **Trust-Aware NLP Framework for Matching Informal Workers to Industry Demand**
 
 TrueRank ranks informal workers (electricians, plumbers, carpenters …) for a natural-language service request:
@@ -117,3 +119,11 @@ TrueRank/
 * **"JWT_SECRET_KEY is missing"**: run `python scripts/init_env.py`.
 * **The page says "Frontend not built yet"**: run `npm install && npm run build` inside `frontend/`.
 * **Port 5000 is busy on macOS** (AirPlay Receiver): set `PORT=5050` in `.env` and open http://127.0.0.1:5050.
+
+## 9. Deployment (Vercel)
+
+`vercel.json` builds the React site as static files and runs the Flask API (`api/index.py`) as a Python serverless function. Set these environment variables in the Vercel project: `JWT_SECRET_KEY` (32+ random characters), and optionally `ADMIN_EMAIL` and `ADMIN_PASSWORD`. The live database is created in `/tmp` and seeded with the demo data on every cold start.
+
+---
+
+**Author:** Syed Moin Ahmed · © 2026 All rights reserved.

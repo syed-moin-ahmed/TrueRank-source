@@ -1,0 +1,17 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "buildCommand": "cd frontend && npm install && npm run build",
+  "outputDirectory": "frontend/dist",
+  "installCommand": "echo skip",
+  "functions": {
+    "api/index.py": {
+      "maxDuration": 60,
+      "includeFiles": "{ml/**,backend/**,data/seed/**}",
+      "excludeFiles": "{frontend/**,tests/**,docs/**,scripts/**,.venv/**,ml/nltk_data/corpora/omw-1.4*/**,ml/nltk_data/corpora/omw-1.4.zip}"
+    }
+  },
+  "rewrites": [
+    { "source": "/api/(.*)", "destination": "/api/index" },
+    { "source": "/((?!api/).*)", "destination": "/index.html" }
+  ]
+}

@@ -5,7 +5,11 @@ __pycache__/
 venv/
 backend/instance/*.db
 backend/instance/*.db-*
-ml/nltk_data/
+ml/nltk_data/**
+!ml/nltk_data/corpora/
+!ml/nltk_data/corpora/stopwords.zip
+!ml/nltk_data/corpora/wordnet.zip
 frontend/node_modules/
 frontend/dist/
 .DS_Store
+.vercel
