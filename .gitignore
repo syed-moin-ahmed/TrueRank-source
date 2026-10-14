@@ -17,3 +17,6 @@ frontend/dist/
 # iCloud sync duplicates
 * 2
 * 2.*
+
+# Full research paper stays local only (publisher copyright)
+paper/

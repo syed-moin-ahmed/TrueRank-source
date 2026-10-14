@@ -1,10 +1,26 @@
+<div align="center">
+
 # TrueRank
 
-> © 2026 Syed Moin Ahmed. All rights reserved. Private repository, see [LICENSE](LICENSE).
+### Trust-Aware NLP Framework for Matching Informal Workers to Industry Demand
 
-**Trust-Aware NLP Framework for Matching Informal Workers to Industry Demand**
+Ranks electricians, plumbers, carpenters and other informal workers for a plain-English service request by combining **skill relevance** (TF-IDF + cosine similarity) with a **composite trust score** built from their real track record.
 
-TrueRank ranks informal workers (electricians, plumbers, carpenters …) for a natural-language service request:
+[**🔗 Live demo**](https://truerank-teal.vercel.app) · [📄 Research paper & results](https://github.com/syed-moin-ahmed/TrueRank#research-publication) · [Architecture](docs/ARCHITECTURE.md)
+
+![Python](https://img.shields.io/badge/Python-3.10+-3776AB?logo=python&logoColor=white)
+![scikit-learn](https://img.shields.io/badge/scikit--learn-TF--IDF-F7931E?logo=scikitlearn&logoColor=white)
+![NLTK](https://img.shields.io/badge/NLTK-lemmatization-154F5B)
+![Flask](https://img.shields.io/badge/Flask-REST%20API-000000?logo=flask&logoColor=white)
+![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=black)
+![Tests](https://img.shields.io/badge/tests-40-2EA44F)
+![Paper](https://img.shields.io/badge/Paper-Scopus%20%C2%B7%20Taylor%20%26%20Francis-0A5EB0)
+
+</div>
+
+> © 2026 Syed Moin Ahmed. All rights reserved. The code is published for viewing only; see [LICENSE](LICENSE).
+
+## How it works
 
 ```
 query → preprocessing → TF-IDF → cosine similarity S(w,q)
@@ -14,12 +30,33 @@ query → preprocessing → TF-IDF → cosine similarity S(w,q)
                  R(w,q) = 0.7·S(w,q) + 0.3·TS(w)  →  ranked, explained recommendations
 ```
 
-Ratings, completed jobs, endorsements and disputes update the trust score in the database, and the next search ranks differently. That is the feedback loop.
+Ratings, completed jobs, endorsements and disputes update the trust score in the database, so the next search ranks differently. That is the feedback loop.
 
-* Design decisions and research-vs-application notes: **[docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)**
-* Live viva demonstration: **[docs/VIVA_DEMO.md](docs/VIVA_DEMO.md)**
+**Highlights**
+- **Research core separated from the web layer.** `ml/` never imports Flask or touches the database, so the algorithm is tested on its own.
+- **Explainable ranking.** The matched terms add up exactly to the similarity score (tested), and every trust component is shown.
+- **90.6 % accuracy** in the paper's evaluation, ahead of Naïve Bayes, Logistic Regression, SVM and Random Forest.
+- **Full-stack:** Flask REST API (JWT, roles, Pydantic validation, parameterised SQL), React 19 frontend with four portals, SQLite with 13 constrained tables.
+- **40 automated tests**, including a complete end-to-end API flow.
+- **Deployed on Vercel:** static React site plus Python serverless API.
+
+## Where to look in the code
+
+| Path | What it does |
+|---|---|
+| [`ml/preprocessing/`](ml/preprocessing) | tokenising, stop words, lemmatisation, worker document builder |
+| [`ml/matching/tfidf_index.py`](ml/matching/tfidf_index.py) | TF-IDF index, cosine similarity, per-term contributions |
+| [`ml/trust/trust_score.py`](ml/trust/trust_score.py) | Composite Trust Score with cold-start priors |
+| [`ml/ranking/`](ml/ranking) | score fusion, ranking and explanations |
+| [`backend/app/`](backend/app) | Flask routes, services, auth, schema |
+| [`frontend/src/`](frontend/src) | React app: public, requester, worker and admin portals |
+| [`tests/`](tests) | unit and end-to-end tests |
+
+More detail: **[docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)** · demo walkthrough: **[docs/VIVA_DEMO.md](docs/VIVA_DEMO.md)**
 
 ---
+
+# Running it locally
 
 ## 1. Requirements
 
@@ -126,4 +163,4 @@ TrueRank/
 
 ---
 
-**Author:** Syed Moin Ahmed · © 2026 All rights reserved.
+**Author:** Syed Moin Ahmed ([syedmoin1907@gmail.com](mailto:syedmoin1907@gmail.com)) · © 2026 All rights reserved.
