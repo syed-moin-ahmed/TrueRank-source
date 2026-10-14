@@ -13,3 +13,7 @@ frontend/node_modules/
 frontend/dist/
 .DS_Store
 .vercel
+
+# iCloud sync duplicates
+* 2
+* 2.*
