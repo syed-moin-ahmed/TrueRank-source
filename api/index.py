@@ -7,17 +7,22 @@ filled with the synthetic demo data. Changes made on the live site last only whi
 stays warm. The local version (START TRUERANK.command) keeps its data normally.
 
 Environment variables to set in the Vercel project settings:
-    JWT_SECRET_KEY   at least 32 random characters
+    JWT_SECRET_KEY   optional; a random key is generated per instance if not set
     ADMIN_EMAIL      admin login for the live site (optional)
     ADMIN_PASSWORD   8+ characters with letters and numbers (optional)
 """
 import os
+import secrets
 import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 os.environ.setdefault("DATABASE_PATH", "/tmp/truerank.db")
+# Each Vercel instance has its own fresh database, so a per-instance random signing key is
+# consistent with it. Set JWT_SECRET_KEY in Vercel to override.
+if len(os.getenv("JWT_SECRET_KEY", "")) < 32:
+    os.environ["JWT_SECRET_KEY"] = secrets.token_urlsafe(48)
 
 from backend.app import create_app  # noqa: E402
 from backend.app.auth.security import hash_password  # noqa: E402
