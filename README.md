@@ -14,7 +14,7 @@ Ranks electricians, plumbers, carpenters and other informal workers for a plain-
 ![Flask](https://img.shields.io/badge/Flask-REST%20API-000000?logo=flask&logoColor=white)
 ![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=black)
 ![Tests](https://img.shields.io/badge/tests-40-2EA44F)
-![Paper](https://img.shields.io/badge/Paper-Scopus%20%C2%B7%20Taylor%20%26%20Francis-0A5EB0)
+![Paper](https://img.shields.io/badge/Paper-Presented%20at%20ICSIIT-0A5EB0)
 
 </div>
 
