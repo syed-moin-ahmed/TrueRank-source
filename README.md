@@ -6,7 +6,7 @@
 
 Ranks electricians, plumbers, carpenters and other informal workers for a plain-English service request by combining **skill relevance** (TF-IDF + cosine similarity) with a **composite trust score** built from their real track record.
 
-[**🔗 Live demo**](https://truerank-teal.vercel.app) · [📄 Research paper & results](https://github.com/syed-moin-ahmed/TrueRank#research-publication) · [Architecture](docs/ARCHITECTURE.md)
+[**🔗 Live demo**](https://truerank-teal.vercel.app) · [📄 Research paper & results](https://github.com/syed-moin-ahmed/TrueRank#research-paper) · [Architecture](docs/ARCHITECTURE.md)
 
 ![Python](https://img.shields.io/badge/Python-3.10+-3776AB?logo=python&logoColor=white)
 ![scikit-learn](https://img.shields.io/badge/scikit--learn-TF--IDF-F7931E?logo=scikitlearn&logoColor=white)

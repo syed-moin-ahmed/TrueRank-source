@@ -66,7 +66,7 @@ The paper fixes the weights, but not how the raw data is scaled. For `TS` and `S
 | PE, Peer Endorsements | `min(endorsements, PE_CAP) ÷ PE_CAP` (PE_CAP = 20) | dataset baseline + live endorsements |
 | DA, Dispute Adjustment | `1 − min(1, disputes ÷ max(completed jobs, 1))` | dataset baseline + live disputes not dismissed |
 
-**Why DA works this way.** The dataset stores a *dispute count*, and the paper uses a **+0.20** weight while also describing "an inverted weight for the dispute counter" and "points taken off for disputes". DA is therefore an *inverted* dispute rate: 1 means no disputes, and every dispute lowers it. The published formula and weights are used unchanged, and they still sum to 1.
+**Why DA works this way.** The dataset stores a *dispute count*, and the paper uses a **+0.20** weight while also describing "an inverted weight for the dispute counter" and "points taken off for disputes". DA is therefore an *inverted* dispute rate: 1 means no disputes, and every dispute lowers it. The formula and weights from the paper are used unchanged, and they still sum to 1.
 
 **Cold start.** If a component has no underlying data yet (no ratings, no finished jobs, no job history), the UI shows **"Not enough data"** and the score uses a documented **neutral prior of 0.50** for that component. Zero endorsements is real data, so PE = 0. A brand-new worker therefore starts at `0.4·0.5 + 0.2·0.5 + 0.2·0 + 0.2·0.5 = 0.40`.
 

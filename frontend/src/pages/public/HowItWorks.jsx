@@ -123,7 +123,7 @@ export default function HowItWorks() {
             <CardHeader title="Implementation choices made for the web application" icon={LuSettings2} subtitle="These are engineering decisions needed to run the method live. They are not claims from the research paper." />
             <div className="grid grid-2">
               {[
-                ["Dispute Adjustment (DA)", "The dataset stores a dispute count. TrueRank uses DA = 1 − min(1, disputes ÷ completed jobs), the “inverted dispute counter” described in the paper, so the published +0.20 weight is kept unchanged."],
+                ["Dispute Adjustment (DA)", "The dataset stores a dispute count. TrueRank uses DA = 1 − min(1, disputes ÷ completed jobs), the “inverted dispute counter” described in the paper, so the paper's +0.20 weight is kept unchanged."],
                 ["Normalisation", `AR = rating ÷ 5, CR = completed ÷ accepted jobs, PE = min(endorsements, ${c?.pe_cap ?? 20}) ÷ ${c?.pe_cap ?? 20}. All components lie in 0–1.`],
                 ["New workers (cold start)", `A component with no data yet is shown as “Not enough data” and a neutral value of ${(c?.neutral_prior ?? 0.5).toFixed(2)} is used in the score, so new workers are neither rewarded nor punished for missing history.`],
                 ["Similarity threshold τ", `Workers with S(w,q) below ${(c?.min_similarity ?? 0.05).toFixed(2)} are not ranked. Without it, a highly trusted worker with no matching skill could appear for an unrelated request.`],

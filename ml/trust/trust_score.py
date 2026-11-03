@@ -14,7 +14,7 @@ and can be fused with cosine similarity, which is also in [0, 1]):
 
 DA is the "inverted weight for the dispute counter" described in the paper: a worker
 with no disputes gets DA = 1, and every dispute lowers it. Because it is inverted,
-the published +0.20 weight is used unchanged and the four weights still sum to 1.
+the +0.20 weight from the paper is used unchanged and the four weights still sum to 1.
 
 Cold start: when a component has no underlying data (e.g. no ratings yet), the UI
 shows "Not enough data" and the score uses the documented neutral prior instead.
